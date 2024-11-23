@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useAuthStore from "../zustand/store";
 type FormValues = {
   email: string;
@@ -33,7 +33,6 @@ const Login = () => {
     mode: "onChange",
   });
   const onSubmitHandler = async (data: FormValues) => {
-    //console.log(data);
     const { email, password } = data;
     if (state === "admin") {
       await login(email, password, "admin");
@@ -41,15 +40,14 @@ const Login = () => {
       await login(email, password, "doctor");
     }
   };
-  useEffect(() => {
-    if (token) {
-      console.log("token from useEffect", token);
-      navigate("/admin-dashboard");
-    } else if (dToken) {
-      console.log("token from useEffect", dToken);
-      navigate("/doctor-dashboard");
-    }
-  }, [token, navigate, dToken]);
+  if (token) {
+    console.log("token from useEffect", token);
+    navigate("/admin-dashboard");
+  } else if (dToken) {
+    console.log("token from useEffect", dToken);
+    navigate("/doctor-dashboard");
+  }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
