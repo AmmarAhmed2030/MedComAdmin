@@ -9,7 +9,7 @@ type FormValues = {
   password: string;
 };
 const Login = () => {
-  const [state, setState] = useState("admin");
+  const [state, setState] = useState("doctor");
   const { login, token, dToken, loading } = useAuthStore();
   console.log(token);
   const loginSchema = yup.object().shape({
